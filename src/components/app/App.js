@@ -1,13 +1,26 @@
 import React from "react";
 
 import NavBar from "../nav-bar";
-// sdfsd
+import { BrowserRouter as Router, Switch, Route } from "react-router-dom";
 
 function App() {
   return (
-    <div className="App">
+    <Router>
       <NavBar></NavBar>
-    </div>
+      <Switch>
+        <Route path="/">
+
+        </Route>
+        <Route path="/info">
+          
+        </Route>
+        <Route path="/corzina">
+          
+        </Route>
+      </Switch>
+    </Router>
+      
+
   );
 }
 
