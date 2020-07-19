@@ -1,8 +1,10 @@
 import React, { useState, useEffect } from "react";
 
-import NavBar from "../nav-bar";
 import { BrowserRouter as Router, Switch, Route } from "react-router-dom";
 import { fetchRestoran } from "../../api/GitRestorApi";
+
+import NavBar from "../nav-bar";
+import ListsContainer from "../lists-container";
 
 function App() {
   const [menu, setMenu] = useState();
@@ -13,6 +15,8 @@ function App() {
     fetchAPI();
   }, []);
   const restName = menu ? menu.data.restaurant.company.name : null;
+  const restMenus = menu ? menu.data.restaurant.menu.categories : null;
+  console.log(restMenus);
   return (
     <Router>
       <NavBar title={restName}></NavBar>
@@ -24,7 +28,7 @@ function App() {
           <h2>Тут будет корзина</h2>
         </Route>
         <Route path="/">
-          <h2>Тут будет меню</h2>
+          <ListsContainer restMenus={restMenus}></ListsContainer>
         </Route>
       </Switch>
     </Router>

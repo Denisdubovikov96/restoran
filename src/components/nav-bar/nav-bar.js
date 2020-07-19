@@ -9,17 +9,10 @@ import MenuIcon from "@material-ui/icons/Menu";
 import MenuBookIcon from "@material-ui/icons/MenuBook";
 import InfoIcon from "@material-ui/icons/Info";
 import ShoppingBasketIcon from "@material-ui/icons/ShoppingBasket";
-import { makeStyles } from "@material-ui/core/styles";
 import { Link } from "react-router-dom";
 
-const useStyles = makeStyles({
-  toolbarMy: {
-    padding: 0,
-  },
-});
-
 export default function DenseAppBar({ title }) {
-  const classes = useStyles();
+  // const classes = useStyles();
 
   const [anchorEl, setAnchorEl] = React.useState(null);
   const handleClick = (event) => {
@@ -32,38 +25,33 @@ export default function DenseAppBar({ title }) {
   return (
     <AppBar position="static">
       <Toolbar variant="dense">
-        <IconButton
-          edge="start"
-          color="inherit"
-          onClick={handleClick}
-          aria-controls="customized-menu"
-          aria-haspopup="true"
-        >
+        <IconButton edge="start" color="inherit" onClick={handleClick}>
           <MenuIcon />
         </IconButton>
         <Menu
           style={{ top: 30, left: -8 }}
-          id="customized-menu"
           anchorEl={anchorEl}
           keepMounted
           open={Boolean(anchorEl)}
           onClose={handleClose}
         >
-          <MenuItem>
-            <Link to="/">
+          <Link to="/">
+            <MenuItem>
               <MenuBookIcon fontSize="default" color="primary" />
-            </Link>
-          </MenuItem>
-          <MenuItem>
-            <Link to="/corzina">
-              <InfoIcon fontSize="default" color="primary" />
-            </Link>
-          </MenuItem>
-          <MenuItem>
-            <Link to="/info">
+            </MenuItem>
+          </Link>
+
+          <Link to="/info">
+            <MenuItem>
               <ShoppingBasketIcon fontSize="default" color="primary" />
-            </Link>
-          </MenuItem>
+            </MenuItem>
+          </Link>
+
+          <Link to="/corzina">
+            <MenuItem>
+              <InfoIcon fontSize="default" color="primary" />
+            </MenuItem>
+          </Link>
         </Menu>
         <Typography variant="h6" color="inherit">
           {title}
