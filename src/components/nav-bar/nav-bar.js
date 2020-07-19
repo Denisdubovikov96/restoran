@@ -3,23 +3,24 @@ import AppBar from "@material-ui/core/AppBar";
 import Toolbar from "@material-ui/core/Toolbar";
 import Typography from "@material-ui/core/Typography";
 import IconButton from "@material-ui/core/IconButton";
-import MenuIcon from "@material-ui/icons/Menu";
 import Menu from "@material-ui/core/Menu";
 import MenuItem from "@material-ui/core/MenuItem";
-import InboxIcon from "@material-ui/icons/MoveToInbox";
-import DraftsIcon from "@material-ui/icons/Drafts";
-import SendIcon from "@material-ui/icons/Send";
+import MenuIcon from "@material-ui/icons/Menu";
+import MenuBookIcon from "@material-ui/icons/MenuBook";
+import InfoIcon from "@material-ui/icons/Info";
+import ShoppingBasketIcon from "@material-ui/icons/ShoppingBasket";
 import { makeStyles } from "@material-ui/core/styles";
 import { Link } from "react-router-dom";
 
 const useStyles = makeStyles({
-  icon: {
+  toolbarMy: {
     padding: 0,
   },
 });
 
 export default function DenseAppBar({ title }) {
   const classes = useStyles();
+
   const [anchorEl, setAnchorEl] = React.useState(null);
   const handleClick = (event) => {
     setAnchorEl(event.currentTarget);
@@ -30,11 +31,18 @@ export default function DenseAppBar({ title }) {
   };
   return (
     <AppBar position="static">
-      <Toolbar variant="dence">
-        <IconButton edge="start" color="inherit" onClick={handleClick}>
+      <Toolbar variant="dense">
+        <IconButton
+          edge="start"
+          color="inherit"
+          onClick={handleClick}
+          aria-controls="customized-menu"
+          aria-haspopup="true"
+        >
           <MenuIcon />
         </IconButton>
         <Menu
+          style={{ top: 30, left: -8 }}
           id="customized-menu"
           anchorEl={anchorEl}
           keepMounted
@@ -43,17 +51,17 @@ export default function DenseAppBar({ title }) {
         >
           <MenuItem>
             <Link to="/">
-              <SendIcon fontSize="default" color="primary" />
+              <MenuBookIcon fontSize="default" color="primary" />
             </Link>
           </MenuItem>
           <MenuItem>
             <Link to="/corzina">
-              <DraftsIcon fontSize="default" color="primary" />
+              <InfoIcon fontSize="default" color="primary" />
             </Link>
           </MenuItem>
           <MenuItem>
             <Link to="/info">
-              <InboxIcon fontSize="default" color="primary" />
+              <ShoppingBasketIcon fontSize="default" color="primary" />
             </Link>
           </MenuItem>
         </Menu>
