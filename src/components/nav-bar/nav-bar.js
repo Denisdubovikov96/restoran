@@ -1,7 +1,7 @@
 import React from "react";
 import AppBar from "@material-ui/core/AppBar";
 import Toolbar from "@material-ui/core/Toolbar";
-import Typography from "@material-ui/core/Typography";
+import { Typography, makeStyles } from "@material-ui/core";
 import IconButton from "@material-ui/core/IconButton";
 import Menu from "@material-ui/core/Menu";
 import MenuItem from "@material-ui/core/MenuItem";
@@ -10,9 +10,14 @@ import MenuBookIcon from "@material-ui/icons/MenuBook";
 import InfoIcon from "@material-ui/icons/Info";
 import ShoppingBasketIcon from "@material-ui/icons/ShoppingBasket";
 import { Link } from "react-router-dom";
+const useStyles = makeStyles((theme) => ({
+  root: {
+    padding: '0 24px',
+  },
+}));
 
 export default function DenseAppBar({ title }) {
-  // const classes = useStyles();
+  const classes = useStyles();
 
   const [anchorEl, setAnchorEl] = React.useState(null);
   const handleClick = (event) => {
@@ -24,12 +29,12 @@ export default function DenseAppBar({ title }) {
   };
   return (
     <AppBar position="static">
-      <Toolbar variant="dense">
+      <Toolbar className={classes.root} variant="dense">
         <IconButton edge="start" color="inherit" onClick={handleClick}>
           <MenuIcon />
         </IconButton>
         <Menu
-          style={{ top: 30, left: -8 }}
+          style={{ top: 16, left: -8 }}
           anchorEl={anchorEl}
           keepMounted
           open={Boolean(anchorEl)}
