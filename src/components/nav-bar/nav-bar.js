@@ -12,7 +12,7 @@ import ShoppingBasketIcon from "@material-ui/icons/ShoppingBasket";
 import { Link } from "react-router-dom";
 const useStyles = makeStyles((theme) => ({
   root: {
-    padding: '0 24px',
+    padding: "0 24px",
   },
 }));
 
@@ -46,15 +46,15 @@ export default function DenseAppBar({ title }) {
             </MenuItem>
           </Link>
 
-          <Link to="/info">
-            <MenuItem>
-              <ShoppingBasketIcon fontSize="default" color="primary" />
-            </MenuItem>
-          </Link>
-
           <Link to="/corzina">
             <MenuItem>
               <InfoIcon fontSize="default" color="primary" />
+            </MenuItem>
+          </Link>
+
+          <Link to="/info">
+            <MenuItem>
+              <ShoppingBasketIcon fontSize="default" color="primary" />
             </MenuItem>
           </Link>
         </Menu>

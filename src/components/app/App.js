@@ -21,14 +21,14 @@ function App() {
     <Router>
       <NavBar title={restName}></NavBar>
       <Switch>
-        <Route path="/info">
+        <Route path="/info" exact>
           <h2>Тут будет информация</h2>
         </Route>
-        <Route path="/corzina">
+        <Route path="/corzina" exact>
           <h2>Тут будет корзина</h2>
         </Route>
-        <Route path="/">
-          <ListsContainer restMenus={restMenus}></ListsContainer>
+        <Route path="/" exact >
+          <ListsContainer restMenus={restMenus}/>
         </Route>
       </Switch>
     </Router>
