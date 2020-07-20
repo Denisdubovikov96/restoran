@@ -1,4 +1,4 @@
-import React from "react";
+import React, { useState } from "react";
 import Box from "@material-ui/core/Box";
 import { Typography, makeStyles } from "@material-ui/core";
 import Accordion from "@material-ui/core/Accordion";
@@ -50,10 +50,27 @@ const useStyles = makeStyles((theme) => ({
   root: {
     padding: "4px 8px 8px",
   },
+  oulinedNone: {
+    "&:focus": {
+      outline: "none",
+    },
+  },
 }));
 
 export default function MenuListItem({ item }) {
   const classes = useStyles();
+  const [counter, setCounter] = useState(1);
+
+  const handlerPlus = () => {
+    setCounter(counter + 1);
+  };
+  const handlerMinus = () => {
+    if (counter - 1 === 0) {
+      setCounter(1);
+    } else {
+      setCounter(counter - 1);
+    }
+  };
   return (
     <Box className={classes.menuItemCont}>
       <Accordion className={classes.accor}>
@@ -79,12 +96,15 @@ export default function MenuListItem({ item }) {
             </Box>
             <Box className={classes.toolbarButtons}>
               <ButtonGroup
-                disableElevation
                 variant="contained"
                 color="primary"
                 aria-label="contained primary button group"
               >
-                <Button className={classes.btnRemove} size="small">
+                <Button
+                  onClick={handlerMinus}
+                  className={classes.oulinedNone}
+                  size="small"
+                >
                   <RemoveIcon />
                 </Button>
                 <Typography
@@ -93,9 +113,13 @@ export default function MenuListItem({ item }) {
                   align="center"
                   color="textPrimary"
                 >
-                  122
+                  {counter}
                 </Typography>
-                <Button className={classes.btnAdd} size="small">
+                <Button
+                  onClick={handlerPlus}
+                  className={classes.oulinedNone}
+                  size="small"
+                >
                   <AddIcon />
                 </Button>
               </ButtonGroup>

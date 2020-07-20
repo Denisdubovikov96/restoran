@@ -35,7 +35,9 @@ const useStyles = makeStyles((theme) => ({
     margin: "5px 0",
   },
   root: {
-    padding: "4px 8px 8px",
+    [theme.breakpoints.between("xs", "md")]: {
+      padding: "4px 8px 8px",
+    },
   },
 }));
 
