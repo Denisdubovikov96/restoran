@@ -22,7 +22,7 @@ function App() {
 			<NavBar title={restName}></NavBar>
 			<Switch>
 				<Route path="/info" exact>
-					<h2>123456789</h2>
+					<h2>123hhhhhhh</h2>
 				</Route>
 				<Route path="/corzina" exact>
 					<h2>Тут будет корзина</h2>
