@@ -1,7 +1,7 @@
 import React from "react";
 import { Typography, makeStyles } from "@material-ui/core";
 import Grid from "@material-ui/core/Grid";
-// import Box from "@material-ui/core/Box";
+import Box from "@material-ui/core/Box";
 import Accordion from "@material-ui/core/Accordion";
 import AccordionSummary from "@material-ui/core/AccordionSummary";
 import AccordionDetails from "@material-ui/core/AccordionDetails";
