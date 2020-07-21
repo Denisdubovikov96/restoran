@@ -38,9 +38,8 @@ function App() {
       });
       console.log(index);
       // если не нашли ничего не делаем
-      if (index === undefined) {
+      if (index === undefined || index === -1) {
         console.log("не нашли");
-        return;
       } else {
         console.log("нашли");
         // нашли такой же айди
@@ -51,7 +50,6 @@ function App() {
         //  удаляем старый из масива
         oldBasket.splice(index, 1);
       }
-      return;
     }
     // обьявляем новый масив
     const newBasket = [...oldBasket, newItem];
@@ -62,13 +60,13 @@ function App() {
     <Router>
       <NavBar title={restName}></NavBar>
       <Switch>
-        <Route path="/info" exact>
+        <Route path="/info">
           <h2>Тут будет информация</h2>
         </Route>
-        <Route path="/corzina" exact>
+        <Route path="/corzina">
           <h2>Тут будет корзина</h2>
         </Route>
-        <Route path="/" exact>
+        <Route path="/" exact >
           <ListsContainer addItem={handlerAddItem} restMenus={restMenus} />
         </Route>
       </Switch>
