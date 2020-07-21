@@ -53,19 +53,24 @@ export default function ListMenu({ categories, addItem }) {
       })
     : null;
   return (
-    <Grid item container xs={12} className={classes.gridCont}>
+    <Grid 
+    item 
+    container 
+    xs={12} 
+    className={classes.gridCont}
+    >
       <Accordion className={classes.accor}>
         <AccordionSummary
-          className={{ root: classes.root, expandIcon: classes.expandIcon }}
+        //   className={{ root: classes.root, expandIcon: classes.expandIcon }}
           expandIcon={<ExpandMoreIcon />}
           aria-controls="panel1a-content"
           id="panel1a-header"
         >
-          <Typography variant="h5" className={classes.catTitle}>
+          <Typography variant="h5">
             {categories.name}
           </Typography>
         </AccordionSummary>
-        <AccordionDetails className={classes.root}>
+        <AccordionDetails >
           <Grid item xs={12} container>
             {items}
           </Grid>

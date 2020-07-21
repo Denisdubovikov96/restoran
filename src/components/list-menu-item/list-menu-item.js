@@ -55,7 +55,6 @@ const useStyles = makeStyles((theme) => ({
       outline: "none",
     },
   },
-
 }));
 
 export default function MenuListItem({ item, addItem }) {
@@ -107,14 +106,15 @@ export default function MenuListItem({ item, addItem }) {
                 >
                   <RemoveIcon />
                 </Button>
-                <Typography
+                {/* надо изменить верстку потому что в групу кнопок нельзя добавлять елементы типа Typography */}
+                {/* <Typography
                   className={classes.groupCounter}
                   variant="h6"
                   align="center"
                   color="textPrimary"
                 >
                   {counter}
-                </Typography>
+                </Typography> */}
                 <Button
                   onClick={handlerPlus}
                   className={classes.oulinedNone}

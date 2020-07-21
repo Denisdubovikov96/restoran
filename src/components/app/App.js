@@ -16,7 +16,7 @@ function App() {
   }, []);
   const restName = menu ? menu.data.restaurant.company.name : null;
   const restMenus = menu ? menu.data.restaurant.menu.categories : null;
-  console.log(restMenus);
+
   const [basket, setBasket] = useState([]);
 
   function handlerAddItem(item, count) {
@@ -55,7 +55,6 @@ function App() {
     const newBasket = [...oldBasket, newItem];
     setBasket(newBasket);
   }
-  console.log(basket);
   return (
     <Router>
       <NavBar title={restName}></NavBar>
