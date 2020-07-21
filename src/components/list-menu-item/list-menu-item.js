@@ -55,12 +55,12 @@ const useStyles = makeStyles((theme) => ({
       outline: "none",
     },
   },
+
 }));
 
-export default function MenuListItem({ item }) {
+export default function MenuListItem({ item, addItem }) {
   const classes = useStyles();
   const [counter, setCounter] = useState(1);
-
   const handlerPlus = () => {
     setCounter(counter + 1);
   };
@@ -123,7 +123,14 @@ export default function MenuListItem({ item }) {
                   <AddIcon />
                 </Button>
               </ButtonGroup>
-              <Button variant="contained" color="secondary">
+              <Button
+                onClick={() => {
+                  addItem(item, counter);
+                  setCounter(1);
+                }}
+                variant="contained"
+                color="secondary"
+              >
                 Add
               </Button>
             </Box>

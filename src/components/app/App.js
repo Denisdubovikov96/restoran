@@ -17,6 +17,21 @@ function App() {
   const restName = menu ? menu.data.restaurant.company.name : null;
   const restMenus = menu ? menu.data.restaurant.menu.categories : null;
   console.log(restMenus);
+  const [basket, setBasket] = useState([]);
+
+  function handlerAddItem(item, count) {
+    const oldbasket = basket;
+    const newItem = {
+      id: item.id,
+      name: item.name,
+      price: item.price,
+      count: count,
+      totalPrice: +(item.price * count).toFixed(2),
+    };
+    const newBasket = [...oldbasket, newItem];
+    setBasket(newBasket);
+  }
+  console.log(basket);
   return (
     <Router>
       <NavBar title={restName}></NavBar>
@@ -27,8 +42,8 @@ function App() {
         <Route path="/corzina" exact>
           <h2>Тут будет корзина</h2>
         </Route>
-        <Route path="/" exact >
-          <ListsContainer restMenus={restMenus}/>
+        <Route path="/" exact>
+          <ListsContainer addItem={handlerAddItem} restMenus={restMenus} />
         </Route>
       </Switch>
     </Router>

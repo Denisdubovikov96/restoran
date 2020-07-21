@@ -10,6 +10,7 @@ import MenuBookIcon from "@material-ui/icons/MenuBook";
 import InfoIcon from "@material-ui/icons/Info";
 import ShoppingBasketIcon from "@material-ui/icons/ShoppingBasket";
 import { Link } from "react-router-dom";
+
 const useStyles = makeStyles((theme) => ({
   root: {
     padding: "0 24px",

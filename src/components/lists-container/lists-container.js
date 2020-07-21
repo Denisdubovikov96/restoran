@@ -12,11 +12,11 @@ const useStyles = makeStyles((theme) => ({
   },
 }));
 
-export default function ListsContainer({ restMenus }) {
+export default function ListsContainer({ restMenus, addItem }) {
   const classes = useStyles();
   const menus = restMenus
     ? restMenus.map((item) => {
-        return <ListMenu key={item.id} categories={item} />;
+        return <ListMenu key={item.id} addItem={addItem} categories={item} />;
       })
     : null;
   return (

@@ -39,20 +39,25 @@ const useStyles = makeStyles((theme) => ({
       padding: "4px 8px 8px",
     },
   },
+  expandIcon: {
+    [theme.breakpoints.between("xs", "md")]: {
+      marginRight: "-12px",
+    },
+  },
 }));
 
-export default function ListMenu({ categories }) {
+export default function ListMenu({ categories, addItem }) {
   const classes = useStyles();
   const items = categories
     ? categories.items.map((item) => {
-        return <ListMenuItem key={item.id} item={item} />;
+        return <ListMenuItem key={item.id} addItem={addItem} item={item} />;
       })
     : null;
   return (
     <Grid item container xs={12} className={classes.gridCont}>
       <Accordion className={classes.accor}>
         <AccordionSummary
-          className={classes.root}
+          className={{ root: classes.root, expandIcon: classes.expandIcon }}
           expandIcon={<ExpandMoreIcon />}
           aria-controls="panel1a-content"
           id="panel1a-header"
