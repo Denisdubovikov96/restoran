@@ -20,15 +20,41 @@ function App() {
   const [basket, setBasket] = useState([]);
 
   function handlerAddItem(item, count) {
-    const oldbasket = basket;
-    const newItem = {
+    // берем старую корзину
+    let oldBasket = basket;
+    // создаем екземляр нового елемента корзины
+    let newItem = {
       id: item.id,
       name: item.name,
       price: item.price,
       count: count,
       totalPrice: +(item.price * count).toFixed(2),
     };
-    const newBasket = [...oldbasket, newItem];
+    // обьявляем новую корзину
+    if (oldBasket.length > 0) {
+      // ищем одинаковые айди
+      const index = oldBasket.findIndex((item) => {
+        return item.id === newItem.id;
+      });
+      console.log(index);
+      // если не нашли ничего не делаем
+      if (index === undefined) {
+        console.log("не нашли");
+        return;
+      } else {
+        console.log("нашли");
+        // нашли такой же айди
+        let oldItem = oldBasket[index];
+        // к новому елементу добавляем значения старого
+        newItem.count += oldItem.count;
+        newItem.totalPrice += +(newItem.price * newItem.count).toFixed(2);
+        //  удаляем старый из масива
+        oldBasket.splice(index, 1);
+      }
+      return;
+    }
+    // обьявляем новый масив
+    const newBasket = [...oldBasket, newItem];
     setBasket(newBasket);
   }
   console.log(basket);
