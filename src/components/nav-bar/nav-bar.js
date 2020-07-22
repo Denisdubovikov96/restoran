@@ -10,6 +10,8 @@ import MenuBookIcon from "@material-ui/icons/MenuBook";
 import InfoIcon from "@material-ui/icons/Info";
 import ShoppingBasketIcon from "@material-ui/icons/ShoppingBasket";
 import { Link } from "react-router-dom";
+// придумать как добавить бейджик а то сейчас половину бейджа не видно
+// import Badge from "@material-ui/core/Badge";
 
 const useStyles = makeStyles((theme) => ({
   root: {

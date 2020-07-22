@@ -5,7 +5,7 @@ import Accordion from "@material-ui/core/Accordion";
 import AccordionSummary from "@material-ui/core/AccordionSummary";
 import AccordionDetails from "@material-ui/core/AccordionDetails";
 import ExpandMoreIcon from "@material-ui/icons/ExpandMore";
-import ButtonGroup from "@material-ui/core/ButtonGroup";
+import IconButton from "@material-ui/core/IconButton";
 import Button from "@material-ui/core/Button";
 import RemoveIcon from "@material-ui/icons/Remove";
 import AddIcon from "@material-ui/icons/Add";
@@ -44,8 +44,8 @@ const useStyles = makeStyles((theme) => ({
     justifyContent: "space-between",
   },
   groupCounter: {
-    borderBottom: `1px solid #303f9f`,
-    borderTop: `1px solid #303f9f`,
+    display: "flex",
+    alignItems: "center",
   },
   root: {
     padding: "4px 8px 8px",
@@ -94,35 +94,29 @@ export default function MenuListItem({ item, addItem }) {
               <Typography variant="body2">{item.description}</Typography>
             </Box>
             <Box className={classes.toolbarButtons}>
-              <ButtonGroup
-                variant="contained"
-                color="primary"
-                aria-label="contained primary button group"
-              >
-                <Button
+              <Box className={classes.groupCounter}>
+                <IconButton
                   onClick={handlerMinus}
                   className={classes.oulinedNone}
-                  size="small"
+                  size="medium"
+                  color="primary"
+                  variant="contained"
                 >
                   <RemoveIcon />
-                </Button>
+                </IconButton>
                 {/* надо изменить верстку потому что в групу кнопок нельзя добавлять елементы типа Typography */}
-                {/* <Typography
-                  className={classes.groupCounter}
-                  variant="h6"
-                  align="center"
-                  color="textPrimary"
-                >
+                <Typography variant="h6" align="center" color="textPrimary">
                   {counter}
-                </Typography> */}
-                <Button
+                </Typography>
+                <IconButton
                   onClick={handlerPlus}
                   className={classes.oulinedNone}
-                  size="small"
+                  size="medium"
+                  color="primary"
                 >
                   <AddIcon />
-                </Button>
-              </ButtonGroup>
+                </IconButton>
+              </Box>
               <Button
                 onClick={() => {
                   addItem(item, counter);
@@ -131,7 +125,7 @@ export default function MenuListItem({ item, addItem }) {
                 variant="contained"
                 color="secondary"
               >
-                Add
+                {(counter * item.price).toFixed(2) + " $ Add"}
               </Button>
             </Box>
           </Box>

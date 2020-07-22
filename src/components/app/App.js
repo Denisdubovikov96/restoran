@@ -39,14 +39,12 @@ function App() {
       console.log(index);
       // если не нашли ничего не делаем
       if (index === undefined || index === -1) {
-        console.log("не нашли");
       } else {
-        console.log("нашли");
         // нашли такой же айди
         let oldItem = oldBasket[index];
         // к новому елементу добавляем значения старого
         newItem.count += oldItem.count;
-        newItem.totalPrice += +(newItem.price * newItem.count).toFixed(2);
+        newItem.totalPrice += oldItem.totalPrice;
         //  удаляем старый из масива
         oldBasket.splice(index, 1);
       }
@@ -55,6 +53,7 @@ function App() {
     const newBasket = [...oldBasket, newItem];
     setBasket(newBasket);
   }
+  console.log(basket);
   return (
     <Router>
       <NavBar title={restName}></NavBar>
@@ -65,7 +64,7 @@ function App() {
         <Route path="/corzina">
           <h2>Тут будет корзина</h2>
         </Route>
-        <Route path="/" exact >
+        <Route path="/" exact>
           <ListsContainer addItem={handlerAddItem} restMenus={restMenus} />
         </Route>
       </Switch>
