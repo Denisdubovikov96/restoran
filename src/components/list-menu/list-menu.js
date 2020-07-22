@@ -46,10 +46,12 @@ const useStyles = makeStyles((theme) => ({
     backgroundRepeat: "no-repeat",
     backgroundPosition: "center",
     backgroundSize: "cover",
+    order: "100",
     [theme.breakpoints.between("xs", "sm")]: {
       width: "calc(100% - 10px)",
       minHeight: 130,
       maxHeight: 200,
+      order: "-1",
     },
   },
   detailsBox: {
