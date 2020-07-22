@@ -53,6 +53,7 @@ function App() {
     const newBasket = [...oldBasket, newItem];
     setBasket(newBasket);
   }
+
   console.log(basket);
   return (
     <Router>
