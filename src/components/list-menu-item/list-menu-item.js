@@ -1,6 +1,6 @@
 import React, { useState } from "react";
 import Box from "@material-ui/core/Box";
-import { Typography, makeStyles } from "@material-ui/core";
+import { Typography, makeStyles, Divider } from "@material-ui/core";
 import Accordion from "@material-ui/core/Accordion";
 import AccordionSummary from "@material-ui/core/AccordionSummary";
 import AccordionDetails from "@material-ui/core/AccordionDetails";
@@ -20,11 +20,11 @@ const useStyles = makeStyles((theme) => ({
     },
   },
   menuItemCont: {
-    width: "50%",
-    padding: 5,
+    width: "calc(50% - 10px)",
+    height: "fit-content",
+    margin: 5,
     [theme.breakpoints.between("xs", "sm")]: {
       width: "100%",
-      padding: "5px 0",
     },
   },
   accor: {
@@ -34,7 +34,7 @@ const useStyles = makeStyles((theme) => ({
     width: "100%",
     marginBottom: 10,
     "& p": {
-      width: "100",
+      width: "100%",
     },
   },
   toolbarButtons: {
@@ -46,14 +46,25 @@ const useStyles = makeStyles((theme) => ({
   groupCounter: {
     display: "flex",
     alignItems: "center",
+    // border: "1px solid black",
+    // borderTopLeftRadius: 25,
+    // borderTopRightRadius: 25,
+    // borderBottomLeftRadius: 25,
+    // borderBottomRightRadius: 25,
   },
   root: {
-    padding: "4px 8px 8px",
+    [theme.breakpoints.between("xs", "sm")]: {
+      padding: "4px 8px 4px",
+    },
   },
   oulinedNone: {
     "&:focus": {
       outline: "none",
     },
+  },
+  btnAdd: {
+    marginRight: 12,
+    padding: "4px 12px",
   },
 }));
 
@@ -76,6 +87,7 @@ export default function MenuListItem({ item, addItem }) {
         <AccordionSummary
           className={classes.root}
           expandIcon={<ExpandMoreIcon />}
+          IconButtonProps={{ edge: false }}
           aria-controls="panel1a-content"
           id="panel1a-header"
         >
@@ -97,27 +109,21 @@ export default function MenuListItem({ item, addItem }) {
               <Box className={classes.groupCounter}>
                 <IconButton
                   onClick={handlerMinus}
-                  className={classes.oulinedNone}
-                  size="medium"
-                  color="primary"
-                  variant="contained"
+                  size="small"
+                  color="secondary"
                 >
                   <RemoveIcon />
                 </IconButton>
                 {/* надо изменить верстку потому что в групу кнопок нельзя добавлять елементы типа Typography */}
-                <Typography variant="h6" align="center" color="textPrimary">
+                <Typography variant="subtitle1" align="center">
                   {counter}
                 </Typography>
-                <IconButton
-                  onClick={handlerPlus}
-                  className={classes.oulinedNone}
-                  size="medium"
-                  color="primary"
-                >
+                <IconButton onClick={handlerPlus} size="small" color="primary">
                   <AddIcon />
                 </IconButton>
               </Box>
               <Button
+                className={classes.btnAdd}
                 onClick={() => {
                   addItem(item, counter);
                   setCounter(1);
@@ -125,7 +131,13 @@ export default function MenuListItem({ item, addItem }) {
                 variant="contained"
                 color="secondary"
               >
-                {(counter * item.price).toFixed(2) + " $ Add"}
+                {(counter * item.price).toFixed(2) + " $"}
+                <Divider
+                  style={{ margin: "0 5px" }}
+                  orientation="vertical"
+                  flexItem
+                />
+                Add
               </Button>
             </Box>
           </Box>

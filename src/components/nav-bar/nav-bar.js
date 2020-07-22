@@ -3,15 +3,13 @@ import AppBar from "@material-ui/core/AppBar";
 import Toolbar from "@material-ui/core/Toolbar";
 import { Typography, makeStyles } from "@material-ui/core";
 import IconButton from "@material-ui/core/IconButton";
-import Menu from "@material-ui/core/Menu";
-import MenuItem from "@material-ui/core/MenuItem";
 import MenuIcon from "@material-ui/icons/Menu";
 import MenuBookIcon from "@material-ui/icons/MenuBook";
 import InfoIcon from "@material-ui/icons/Info";
-import ShoppingBasketIcon from "@material-ui/icons/ShoppingBasket";
+import ShoppingCartIcon from "@material-ui/icons/ShoppingCart";
 import { Link } from "react-router-dom";
-// придумать как добавить бейджик а то сейчас половину бейджа не видно
-// import Badge from "@material-ui/core/Badge";
+import SwipeableDrawer from "@material-ui/core/SwipeableDrawer";
+import Badge from "@material-ui/core/Badge";
 
 const useStyles = makeStyles((theme) => ({
   root: {
@@ -19,48 +17,46 @@ const useStyles = makeStyles((theme) => ({
   },
 }));
 
-export default function DenseAppBar({ title }) {
+export default function DenseAppBar({ title, basketLenght }) {
   const classes = useStyles();
 
-  const [anchorEl, setAnchorEl] = React.useState(null);
-  const handleClick = (event) => {
-    setAnchorEl(event.currentTarget);
+  const [anchorEl, setAnchorEl] = React.useState(false);
+  const handleClick = () => {
+    setAnchorEl(!anchorEl);
   };
 
-  const handleClose = () => {
-    setAnchorEl(null);
-  };
   return (
     <AppBar position="static">
       <Toolbar className={classes.root} variant="dense">
-        <IconButton edge="start" color="inherit" onClick={handleClick}>
-          <MenuIcon />
+        <IconButton edge="start" color="inherit" onClick={handleClick} >
+          <Badge badgeContent={basketLenght} color="secondary">
+            <MenuIcon />
+          </Badge>
         </IconButton>
-        <Menu
-          style={{ top: 16, left: -8 }}
-          anchorEl={anchorEl}
-          keepMounted
-          open={Boolean(anchorEl)}
-          onClose={handleClose}
+        <SwipeableDrawer
+          open={anchorEl}
+          onOpen={handleClick}
+          onClose={handleClick}
+          anchor="left"
         >
           <Link to="/">
-            <MenuItem>
+            <IconButton>
               <MenuBookIcon fontSize="default" color="primary" />
-            </MenuItem>
+            </IconButton>
           </Link>
-
-          <Link to="/corzina">
-            <MenuItem>
-              <InfoIcon fontSize="default" color="primary" />
-            </MenuItem>
-          </Link>
-
           <Link to="/info">
-            <MenuItem>
-              <ShoppingBasketIcon fontSize="default" color="primary" />
-            </MenuItem>
+            <IconButton>
+              <InfoIcon fontSize="default" color="primary" />
+            </IconButton>
           </Link>
-        </Menu>
+          <Link to="/basket">
+            <IconButton>
+              <Badge badgeContent={basketLenght} color="secondary">
+                <ShoppingCartIcon fontSize="default" color="primary" />
+              </Badge>
+            </IconButton>
+          </Link>
+        </SwipeableDrawer>
         <Typography variant="h6" color="inherit">
           {title}
         </Typography>

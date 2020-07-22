@@ -3,8 +3,22 @@ import React, { useState, useEffect } from "react";
 import { BrowserRouter as Router, Switch, Route } from "react-router-dom";
 import { fetchRestoran } from "../../api/GitRestorApi";
 
+import { createMuiTheme, ThemeProvider } from "@material-ui/core/styles";
+
 import NavBar from "../nav-bar";
 import ListsContainer from "../lists-container";
+import BasketContainer from "../basket-container";
+
+const theme = createMuiTheme({
+  palette: {
+    primary: {
+      main: "#2196f3",
+    },
+    background: {
+      paper: "#eceff1"
+    } 
+  },
+});
 
 function App() {
   const [menu, setMenu] = useState();
@@ -16,7 +30,10 @@ function App() {
   }, []);
   const restName = menu ? menu.data.restaurant.company.name : null;
   const restMenus = menu ? menu.data.restaurant.menu.categories : null;
-
+  const restPictures = menu ? menu.data.restaurant.pictures : null;
+  console.log(restPictures);
+  let im = restPictures ? restPictures[`category-${176691}`] : null;
+  console.log(im);
   const [basket, setBasket] = useState([]);
 
   function handlerAddItem(item, count) {
@@ -36,7 +53,6 @@ function App() {
       const index = oldBasket.findIndex((item) => {
         return item.id === newItem.id;
       });
-      console.log(index);
       // если не нашли ничего не делаем
       if (index === undefined || index === -1) {
       } else {
@@ -54,22 +70,23 @@ function App() {
     setBasket(newBasket);
   }
 
-  console.log(basket);
   return (
-    <Router>
-      <NavBar title={restName}></NavBar>
-      <Switch>
-        <Route path="/info">
-          <h2>Тут будет информация</h2>
-        </Route>
-        <Route path="/corzina">
-          <h2>Тут будет корзина</h2>
-        </Route>
-        <Route path="/" exact>
-          <ListsContainer addItem={handlerAddItem} restMenus={restMenus} />
-        </Route>
-      </Switch>
-    </Router>
+    <ThemeProvider theme={theme}>
+      <Router>
+        <NavBar basketLenght={basket.length} title={restName} />
+        <Switch>
+          <Route path="/info">
+            <h2>Тут будет информация</h2>
+          </Route>
+          <Route path="/basket">
+            <BasketContainer basket={basket} />
+          </Route>
+          <Route path="/">
+            <ListsContainer addItem={handlerAddItem} restMenus={restMenus} restPictures={restPictures}/>
+          </Route>
+        </Switch>
+      </Router>
+    </ThemeProvider>
   );
 }
 

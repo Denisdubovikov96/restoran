@@ -1,8 +1,10 @@
 import React from "react";
-import { Container } from "@material-ui/core";
+import { Container, Box } from "@material-ui/core";
 import { makeStyles } from "@material-ui/core";
 import Grid from "@material-ui/core/Grid";
 import ListMenu from "../list-menu";
+
+const url = "https://d2vwsr3mua7yp8.cloudfront.net/";
 
 const useStyles = makeStyles((theme) => ({
   root: {
@@ -10,18 +12,48 @@ const useStyles = makeStyles((theme) => ({
       padding: 0,
     },
   },
+  imgContMain: {
+    width: "100%",
+    minHeight: 175,
+    maxHeight: 240,
+    backgroundRepeat: "no-repeat",
+    backgroundPosition: "center",
+    backgroundSize: "cover",
+    [theme.breakpoints.between("xs", "sm")]: {
+      display: "none",
+    },
+  },
 }));
-
-export default function ListsContainer({ restMenus, addItem }) {
+// selector 600 x 178
+// category 375 x 130
+export default function ListsContainer({ restMenus, addItem, restPictures }) {
+  const menuImage = restPictures
+    ? url + restPictures["desktop_widget"].filename
+    : "";
   const classes = useStyles();
   const menus = restMenus
     ? restMenus.map((item) => {
-        return <ListMenu key={item.id} addItem={addItem} categories={item} />;
+        return (
+          <ListMenu
+            key={item.id}
+            addItem={addItem}
+            categories={item}
+            pictures={restPictures}
+          />
+        );
       })
     : null;
   return (
-    <Container maxWidth="lg" className={classes.root}>
-      <Grid container>{menus}</Grid>
+    <Container maxWidth="md" className={classes.root}>
+      <Grid container>
+        <Grid item xs={12}>
+          <Box
+            className={classes.imgContMain}
+            style={{ backgroundImage: `url(${menuImage})` }}
+          />
+        </Grid>
+        {menus}
+      </Grid>
     </Container>
   );
 }
