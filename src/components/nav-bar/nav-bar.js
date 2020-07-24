@@ -26,7 +26,7 @@ export default function DenseAppBar({ title, basketLenght }) {
   };
 
   return (
-    <AppBar position="static">
+    <AppBar position="sticky">
       <Toolbar className={classes.root} variant="dense">
         <IconButton edge="start" color="inherit" onClick={handleClick} >
           <Badge badgeContent={basketLenght} color="secondary">

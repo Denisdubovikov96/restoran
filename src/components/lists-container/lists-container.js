@@ -4,8 +4,6 @@ import { makeStyles } from "@material-ui/core";
 import Grid from "@material-ui/core/Grid";
 import ListMenu from "../list-menu";
 
-const url = "https://d2vwsr3mua7yp8.cloudfront.net/";
-
 const useStyles = makeStyles((theme) => ({
   root: {
     [theme.breakpoints.between("xs", "md")]: {
@@ -27,9 +25,12 @@ const useStyles = makeStyles((theme) => ({
 // selector 600 x 178
 // category 375 x 130
 export default function ListsContainer({ restMenus, addItem, restPictures }) {
+  // Делаем ссылку и добавляем инлайн стилем
+  const url = "https://d2vwsr3mua7yp8.cloudfront.net/";
   const menuImage = restPictures
     ? url + restPictures["desktop_widget"].filename
-    : "";
+    : false;
+//   const visible = menuImage ? "block" : "none";
   const classes = useStyles();
   const menus = restMenus
     ? restMenus.map((item) => {
@@ -49,7 +50,10 @@ export default function ListsContainer({ restMenus, addItem, restPictures }) {
         <Grid item xs={12}>
           <Box
             className={classes.imgContMain}
-            style={{ backgroundImage: `url(${menuImage})` }}
+            style={{
+              backgroundImage: `url(${menuImage})`,
+            //   display: `${visible}`,
+            }}
           />
         </Grid>
         {menus}

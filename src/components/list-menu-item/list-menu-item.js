@@ -57,11 +57,6 @@ const useStyles = makeStyles((theme) => ({
       padding: "4px 8px 4px",
     },
   },
-  oulinedNone: {
-    "&:focus": {
-      outline: "none",
-    },
-  },
   btnAdd: {
     marginRight: 12,
     padding: "4px 12px",

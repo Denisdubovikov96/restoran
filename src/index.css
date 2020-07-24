@@ -14,3 +14,9 @@ body {
   outline: none;
   outline-offset: none;
 }
+/* #root {
+  max-width: 960px;
+  overflow: hidden;
+  margin: 0 auto;
+  position: relative;
+} */

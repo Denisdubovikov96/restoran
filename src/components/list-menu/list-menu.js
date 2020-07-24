@@ -7,8 +7,6 @@ import AccordionDetails from "@material-ui/core/AccordionDetails";
 import ExpandMoreIcon from "@material-ui/icons/ExpandMore";
 import ListMenuItem from "../list-menu-item";
 
-const url = "https://d2vwsr3mua7yp8.cloudfront.net/";
-
 const useStyles = makeStyles((theme) => ({
   menuItemCont: {
     "&:nth-child(odd)": {
@@ -26,10 +24,10 @@ const useStyles = makeStyles((theme) => ({
   },
   accor: {
     width: "100%",
+    "&:first-child": {
+      borderRadius: 0,
+    },
   },
-  //   gridCont: {
-  //     margin: "5px 0",
-  //   },
   root: {
     [theme.breakpoints.between("xs", "sm")]: {
       padding: "4px 8px 4px",
@@ -68,10 +66,12 @@ export default function ListMenu({ categories, addItem, pictures }) {
         return <ListMenuItem key={item.id} addItem={addItem} item={item} />;
       })
     : null;
-
+  //   Длеаем ссылку на картинку и добавляем инлайн стилем
+  const url = "https://d2vwsr3mua7yp8.cloudfront.net/";
   const categoryImage = pictures[`category-${categories.id}`]
     ? url + pictures[`category-${categories.id}`].filename
-    : "";
+    : false;
+  const visible = categoryImage ? "block" : "none";
   return (
     <Grid item container xs={12} className={classes.gridCont}>
       <Accordion className={classes.accor}>
@@ -88,7 +88,10 @@ export default function ListMenu({ categories, addItem, pictures }) {
           <Box className={classes.detailsBox}>
             <Box
               className={classes.imgContCategories}
-              style={{ backgroundImage: `url(${categoryImage})` }}
+              style={{
+                backgroundImage: `url(${categoryImage})`,
+                display: `${visible}`,
+              }}
             />
             {items}
           </Box>
