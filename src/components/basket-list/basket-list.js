@@ -17,7 +17,7 @@ export default function BasketList({ item }) {
   return (
     <Box className={classes.root}>
       <Typography variant="subtitle2">{item.name}</Typography>
-      <Typography variant="subtitle2">{item.totalPrice}</Typography>
+      <Typography variant="subtitle2">{item.totalPrice} $</Typography>
     </Box>
   );
 }
