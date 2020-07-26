@@ -1,5 +1,5 @@
 import React from "react";
-import { Container, Box, Paper, makeStyles, Button } from "@material-ui/core";
+import { Container, Paper, makeStyles, Button } from "@material-ui/core";
 import BasketList from "../basket-list";
 import BasketForm from "../basket-form";
 
