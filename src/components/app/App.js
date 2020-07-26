@@ -24,16 +24,18 @@ const theme = createMuiTheme({
 function App() {
   const [menu, setMenu] = useState();
   useEffect(() => {
+    console.log("рендерим ЮЗ");
     const fetchAPI = async () => {
       console.log("рендерим Апп");
       setMenu(await fetchRestoran());
     };
     fetchAPI();
+    return;
   }, []);
   const restName = menu ? menu.data.restaurant.company.name : null;
   const restMenus = menu ? menu.data.restaurant.menu.categories : null;
   const restPictures = menu ? menu.data.restaurant.pictures : null;
-  // console.log(restPictures);
+  console.log(restPictures);
 
   const [basket, setBasket] = useState([]);
   function handlerAddItem(item, count) {

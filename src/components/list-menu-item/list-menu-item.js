@@ -63,6 +63,7 @@ const useStyles = makeStyles((theme) => ({
 }));
 
 export default function MenuListItem({ item, addItem }) {
+    console.log("рендерим елемент категории");
   const classes = useStyles();
   const [counter, setCounter] = useState(1);
   const handlerPlus = () => {

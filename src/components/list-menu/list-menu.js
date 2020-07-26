@@ -53,8 +53,7 @@ export default function ListMenu({ categories, addItem, pictures }) {
   const url = "https://d2vwsr3mua7yp8.cloudfront.net/";
   const categoryImage = pictures[`category-${categories.id}`]
     ? url + pictures[`category-${categories.id}`].filename
-    : false;
-  const visible = categoryImage ? "block" : "none";
+    : null;
   return (
     <Grid item container xs={12}>
       <Accordion square={true} className={classes.accor}>
@@ -69,13 +68,14 @@ export default function ListMenu({ categories, addItem, pictures }) {
         </AccordionSummary>
         <AccordionDetails className={classes.root}>
           <Box className={classes.detailsBox}>
-            <Box
-              className={classes.imgContCategories}
-              style={{
-                backgroundImage: `url(${categoryImage})`,
-                display: `${visible}`,
-              }}
-            />
+            {categoryImage ? (
+              <Box
+                className={classes.imgContCategories}
+                style={{
+                  backgroundImage: `url(${categoryImage})`,
+                }}
+              />
+            ) : null}
             {items}
           </Box>
         </AccordionDetails>

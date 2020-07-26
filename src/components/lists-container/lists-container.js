@@ -27,7 +27,7 @@ export default function ListsContainer({ restMenus, addItem, restPictures }) {
   const url = "https://d2vwsr3mua7yp8.cloudfront.net/";
   const menuImage = restPictures
     ? url + restPictures["desktop_widget"].filename
-    : false;
+    : null;
   const classes = useStyles();
   const menus = restMenus
     ? restMenus.map((item) => {
@@ -46,13 +46,14 @@ export default function ListsContainer({ restMenus, addItem, restPictures }) {
     <Container maxWidth="md" className={classes.root}>
       <Grid container>
         <Grid item xs={12}>
-          <Box
-            className={classes.imgContMain}
-            style={{
-              backgroundImage: `url(${menuImage})`,
-              //   display: `${visible}`,
-            }}
-          />
+          {menuImage ? (
+            <Box
+              className={classes.imgContMain}
+              style={{
+                backgroundImage: `url(${menuImage})`,
+              }}
+            />
+          ) : null}
         </Grid>
         {menus}
       </Grid>
