@@ -1,7 +1,5 @@
 import React from "react";
-import { Container, Box, Paper } from "@material-ui/core";
-import { makeStyles } from "@material-ui/core";
-import Grid from "@material-ui/core/Grid";
+import { Container, Box, Paper, makeStyles, Button } from "@material-ui/core";
 import BasketList from "../basket-list";
 import BasketForm from "../basket-form";
 
@@ -12,18 +10,15 @@ const useStyles = makeStyles((theme) => ({
     },
   },
   boxConteiner: {
-    width: "100%",
+    borderRadius: 0,
+    padding: 10,
+    width: "calc(100% - 20px)",
     display: "flex",
     flexWrap: "wrap",
-  },
-  basketItemsContainer: {
-    width: "calc(40% - 5px)",
-    height: "fit-content",
-    marginLeft: 5,
-    borderRadius: 0,
-    [theme.breakpoints.down("sm")]: {
+    "& form": {
       width: "100%",
-      marginLeft: 0,
+      display: "flex",
+      flexWrap: "wrap",
     },
   },
 }));
@@ -31,18 +26,40 @@ const useStyles = makeStyles((theme) => ({
 export default function BusketContainer({ basket }) {
   const classes = useStyles();
 
-  const itemsBasket = basket
-    ? basket.map((item) => {
-        return <BasketList key={item.id} item={item} />;
-      })
-    : null;
+  const handleSubmit = (event) => {
+    event.preventDefault();
+    const data = new FormData(event.target);
+    data.set("items", JSON.stringify(basket));
+    fetch("https://nofikoff.github.io/all-restaurants/resta.json", {
+      headers: {
+        accept: "application/json, text/plain, */*",
+      },
+      referrer: "http://localhost:3000/basket",
+      referrerPolicy: "no-referrer-when-downgrade",
+      body: data,
+      method: "POST",
+      mode: "cors",
+      credentials: "omit",
+    });
+  };
 
   return (
     <Container maxWidth="md" className={classes.root}>
-      <Box className={classes.boxConteiner}>
-        <BasketForm></BasketForm>
-        <Paper className={classes.basketItemsContainer}>{itemsBasket}</Paper>
-      </Box>
+      <Paper className={classes.boxConteiner}>
+        <form onSubmit={handleSubmit}>
+          <BasketForm />
+          <BasketList basket={basket} />
+          <Button
+            type="submit"
+            color="secondary"
+            fullWidth
+            variant="contained"
+            style={{ borderRadius: 0, marginTop: 10 }}
+          >
+            Добавить
+          </Button>
+        </form>
+      </Paper>
     </Container>
   );
 }

@@ -1,12 +1,16 @@
 import React, { useState } from "react";
-import Box from "@material-ui/core/Box";
-import { Typography, makeStyles, Divider } from "@material-ui/core";
-import Accordion from "@material-ui/core/Accordion";
-import AccordionSummary from "@material-ui/core/AccordionSummary";
-import AccordionDetails from "@material-ui/core/AccordionDetails";
+import {
+  Typography,
+  makeStyles,
+  Divider,
+  Accordion,
+  AccordionSummary,
+  AccordionDetails,
+  IconButton,
+  Button,
+  Box,
+} from "@material-ui/core";
 import ExpandMoreIcon from "@material-ui/icons/ExpandMore";
-import IconButton from "@material-ui/core/IconButton";
-import Button from "@material-ui/core/Button";
 import RemoveIcon from "@material-ui/icons/Remove";
 import AddIcon from "@material-ui/icons/Add";
 
@@ -20,11 +24,12 @@ const useStyles = makeStyles((theme) => ({
     },
   },
   menuItemCont: {
-    width: "calc(50% - 10px)",
-    height: "fit-content",
-    margin: 5,
-    [theme.breakpoints.between("xs", "sm")]: {
-      width: "100%",
+    width: "100%",
+    margin: "5px 0",
+    [theme.breakpoints.up("sm")]: {
+      width: "calc(50% - 10px)",
+      height: "fit-content",
+      margin: 5,
     },
   },
   accor: {
@@ -46,11 +51,6 @@ const useStyles = makeStyles((theme) => ({
   groupCounter: {
     display: "flex",
     alignItems: "center",
-    // border: "1px solid black",
-    // borderTopLeftRadius: 25,
-    // borderTopRightRadius: 25,
-    // borderBottomLeftRadius: 25,
-    // borderBottomRightRadius: 25,
   },
   root: {
     [theme.breakpoints.between("xs", "sm")]: {
@@ -58,7 +58,6 @@ const useStyles = makeStyles((theme) => ({
     },
   },
   btnAdd: {
-    marginRight: 12,
     padding: "4px 12px",
   },
 }));
@@ -70,11 +69,7 @@ export default function MenuListItem({ item, addItem }) {
     setCounter(counter + 1);
   };
   const handlerMinus = () => {
-    if (counter - 1 === 0) {
-      setCounter(1);
-    } else {
-      setCounter(counter - 1);
-    }
+    counter - 1 === 0 ? setCounter(1) : setCounter(counter - 1);
   };
   return (
     <Box className={classes.menuItemCont}>
@@ -87,10 +82,10 @@ export default function MenuListItem({ item, addItem }) {
           id="panel1a-header"
         >
           <Box component="div" className={classes.menuListHead}>
-            <Typography variant="body1" align="left">
+            <Typography variant="body2" align="left">
               {item.name}
             </Typography>
-            <Typography variant="body1" align="right">
+            <Typography variant="body2" align="right">
               {item.price} $
             </Typography>
           </Box>
@@ -109,7 +104,6 @@ export default function MenuListItem({ item, addItem }) {
                 >
                   <RemoveIcon />
                 </IconButton>
-                {/* надо изменить верстку потому что в групу кнопок нельзя добавлять елементы типа Typography */}
                 <Typography variant="subtitle1" align="center">
                   {counter}
                 </Typography>

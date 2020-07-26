@@ -1,7 +1,6 @@
 import React from "react";
-import { Container, Box } from "@material-ui/core";
-import { makeStyles } from "@material-ui/core";
-import Grid from "@material-ui/core/Grid";
+import { Container, Box, makeStyles, Grid } from "@material-ui/core";
+
 import ListMenu from "../list-menu";
 
 const useStyles = makeStyles((theme) => ({
@@ -22,15 +21,13 @@ const useStyles = makeStyles((theme) => ({
     },
   },
 }));
-// selector 600 x 178
-// category 375 x 130
+
 export default function ListsContainer({ restMenus, addItem, restPictures }) {
   // Делаем ссылку и добавляем инлайн стилем
   const url = "https://d2vwsr3mua7yp8.cloudfront.net/";
   const menuImage = restPictures
     ? url + restPictures["desktop_widget"].filename
     : false;
-//   const visible = menuImage ? "block" : "none";
   const classes = useStyles();
   const menus = restMenus
     ? restMenus.map((item) => {
@@ -44,6 +41,7 @@ export default function ListsContainer({ restMenus, addItem, restPictures }) {
         );
       })
     : null;
+
   return (
     <Container maxWidth="md" className={classes.root}>
       <Grid container>
@@ -52,7 +50,7 @@ export default function ListsContainer({ restMenus, addItem, restPictures }) {
             className={classes.imgContMain}
             style={{
               backgroundImage: `url(${menuImage})`,
-            //   display: `${visible}`,
+              //   display: `${visible}`,
             }}
           />
         </Grid>

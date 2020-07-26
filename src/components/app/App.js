@@ -1,13 +1,14 @@
-import React, { useState, useEffect } from "react";
+import React, { useState, useEffect, Suspense } from "react";
 
 import { BrowserRouter as Router, Switch, Route } from "react-router-dom";
 import { fetchRestoran } from "../../api/GitRestorApi";
 
 import { createMuiTheme, ThemeProvider } from "@material-ui/core/styles";
 
+import CircularProgress from "@material-ui/core/CircularProgress";
 import NavBar from "../nav-bar";
-import ListsContainer from "../lists-container";
-import BasketContainer from "../basket-container";
+const ListsContainer = React.lazy(() => import("../lists-container"));
+const BasketContainer = React.lazy(() => import("../basket-container"));
 
 const theme = createMuiTheme({
   palette: {
@@ -15,8 +16,8 @@ const theme = createMuiTheme({
       main: "#2196f3",
     },
     background: {
-      paper: "#eceff1"
-    } 
+      paper: "#eceff1",
+    },
   },
 });
 
@@ -24,6 +25,7 @@ function App() {
   const [menu, setMenu] = useState();
   useEffect(() => {
     const fetchAPI = async () => {
+      console.log("рендерим Апп");
       setMenu(await fetchRestoran());
     };
     fetchAPI();
@@ -31,11 +33,9 @@ function App() {
   const restName = menu ? menu.data.restaurant.company.name : null;
   const restMenus = menu ? menu.data.restaurant.menu.categories : null;
   const restPictures = menu ? menu.data.restaurant.pictures : null;
-  console.log(restPictures);
-  let im = restPictures ? restPictures[`category-${176691}`] : null;
-  console.log(im);
-  const [basket, setBasket] = useState([]);
+  // console.log(restPictures);
 
+  const [basket, setBasket] = useState([]);
   function handlerAddItem(item, count) {
     // берем старую корзину
     let oldBasket = basket;
@@ -74,17 +74,36 @@ function App() {
     <ThemeProvider theme={theme}>
       <Router>
         <NavBar basketLenght={basket.length} title={restName} />
-        <Switch>
-          <Route path="/info">
-            <h2>Тут будет информация</h2>
-          </Route>
-          <Route path="/basket">
-            <BasketContainer basket={basket} />
-          </Route>
-          <Route path="/">
-            <ListsContainer addItem={handlerAddItem} restMenus={restMenus} restPictures={restPictures}/>
-          </Route>
-        </Switch>
+        <Suspense
+          fallback={
+            <CircularProgress
+              color="secondary"
+              style={{
+                position: "absolute",
+                top: "50%",
+                left: "50%",
+                zIndex: 10000,
+                transform: "scale(3)",
+              }}
+            />
+          }
+        >
+          <Switch>
+            <Route path="/info">
+              <h2>Тут будет информация</h2>
+            </Route>
+            <Route path="/basket">
+              <BasketContainer basket={basket} />
+            </Route>
+            <Route path="/">
+              <ListsContainer
+                addItem={handlerAddItem}
+                restMenus={restMenus}
+                restPictures={restPictures}
+              />
+            </Route>
+          </Switch>
+        </Suspense>
       </Router>
     </ThemeProvider>
   );

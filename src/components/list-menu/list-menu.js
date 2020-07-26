@@ -8,48 +8,31 @@ import ExpandMoreIcon from "@material-ui/icons/ExpandMore";
 import ListMenuItem from "../list-menu-item";
 
 const useStyles = makeStyles((theme) => ({
-  menuItemCont: {
-    "&:nth-child(odd)": {
-      padding: "10px 10px 10px 0",
-      [theme.breakpoints.between("xs", "md")]: {
-        padding: 0,
-      },
-    },
-    "&:nth-child(even)": {
-      padding: "10px 0 10px 10px",
-      [theme.breakpoints.between("xs", "md")]: {
-        padding: 0,
-      },
-    },
-  },
   accor: {
     width: "100%",
-    "&:first-child": {
-      borderRadius: 0,
-    },
   },
   root: {
     [theme.breakpoints.between("xs", "sm")]: {
       padding: "4px 8px 4px",
     },
   },
-  expandIcon: {
-    marginRight: 0,
-  },
   imgContCategories: {
     width: "calc(50% - 10px)",
     margin: 5,
-    minHeight: 175,
-    maxHeight: 240,
+    minHeight: 200,
     backgroundRepeat: "no-repeat",
     backgroundPosition: "center",
     backgroundSize: "cover",
     order: "100",
-    [theme.breakpoints.between("xs", "sm")]: {
+    [theme.breakpoints.down("sm")]: {
       width: "calc(100% - 10px)",
-      minHeight: 130,
-      maxHeight: 200,
+      minHeight: 230,
       order: "-1",
+    },
+    [theme.breakpoints.down("xs")]: {
+      width: "calc(100%)",
+      minHeight: 130,
+      margin: "5px 0",
     },
   },
   detailsBox: {
@@ -73,8 +56,8 @@ export default function ListMenu({ categories, addItem, pictures }) {
     : false;
   const visible = categoryImage ? "block" : "none";
   return (
-    <Grid item container xs={12} className={classes.gridCont}>
-      <Accordion className={classes.accor}>
+    <Grid item container xs={12}>
+      <Accordion square={true} className={classes.accor}>
         <AccordionSummary
           className={classes.root}
           expandIcon={<ExpandMoreIcon />}
