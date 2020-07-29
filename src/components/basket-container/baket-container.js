@@ -1,5 +1,10 @@
 import React from "react";
-import { Container, Paper, makeStyles, Button } from "@material-ui/core";
+import {
+  Container,
+  Paper,
+  makeStyles,
+  Button,
+} from "@material-ui/core";
 import BasketList from "../basket-list";
 import BasketForm from "../basket-form";
 
@@ -13,8 +18,6 @@ const useStyles = makeStyles((theme) => ({
     borderRadius: 0,
     padding: 10,
     width: "calc(100% - 20px)",
-    display: "flex",
-    flexWrap: "wrap",
     "& form": {
       width: "100%",
       display: "flex",
@@ -25,6 +28,14 @@ const useStyles = makeStyles((theme) => ({
 
 export default function BusketContainer({ basket }) {
   const classes = useStyles();
+  const total =
+    basket.length > 0
+      ? basket
+          .reduce((accumulator, currentValue) => {
+            return accumulator + currentValue.totalPrice;
+          }, 0)
+          .toFixed(2)
+      : "0.00";
 
   const handleSubmit = (event) => {
     event.preventDefault();
@@ -51,12 +62,18 @@ export default function BusketContainer({ basket }) {
           <BasketList basket={basket} />
           <Button
             type="submit"
-            color="secondary"
+            color="primary"
             fullWidth
             variant="contained"
-            style={{ borderRadius: 0, marginTop: 10 }}
+            style={{
+              borderRadius: 0,
+              marginTop: 10,
+              display: "flex",
+              justifyContent: "space-between",
+            }}
           >
-            Добавить
+            <span>{total} $</span>
+            <span>Сделать заказ</span>
           </Button>
         </form>
       </Paper>

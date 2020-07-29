@@ -1,6 +1,13 @@
 import React from "react";
 import Box from "@material-ui/core/Box";
-import { Typography, makeStyles, Paper, Divider } from "@material-ui/core";
+import {
+  Typography,
+  makeStyles,
+  Paper,
+  Divider,
+  IconButton,
+} from "@material-ui/core";
+import RemoveIcon from "@material-ui/icons/Remove";
 
 const useStyles = makeStyles((theme) => ({
   root: {
@@ -12,10 +19,11 @@ const useStyles = makeStyles((theme) => ({
     },
   },
   boxImets: {
-    padding: "5px 10px",
+    padding: "0 10px",
     "& div": {
       display: "flex",
       justifyContent: "space-between",
+      alignItems: "center",
     },
   },
   basketItemsContainer: {
@@ -26,21 +34,34 @@ const useStyles = makeStyles((theme) => ({
     [theme.breakpoints.down("sm")]: {
       width: "100%",
       marginLeft: 0,
+      marginTop: 10,
     },
   },
 }));
 export default function BasketList({ basket }) {
   const classes = useStyles();
-
+  const total =
+    basket.length > 0
+      ? basket
+          .reduce((accumulator, currentValue) => {
+            return accumulator + currentValue.totalPrice;
+          }, 0)
+          .toFixed(2)
+      : "0.00";
   const items =
     basket.length > 0 ? (
       basket.map((item) => {
         return (
           <Box key={item.id}>
-            <Typography variant="subtitle2">
-              {item.name + " x" + item.count}
+            <Typography variant="caption">
+              {item.count + "x " + item.name}
             </Typography>
-            <Typography variant="subtitle2">{item.totalPrice} $</Typography>
+            <Typography variant="caption">
+              {`${item.totalPrice} $`}
+              <IconButton size="small" color="secondary">
+                <RemoveIcon />
+              </IconButton>
+            </Typography>
           </Box>
         );
       })
@@ -55,8 +76,14 @@ export default function BasketList({ basket }) {
         <Typography variant="subtitle1">Название</Typography>
         <Typography variant="subtitle1">Цена $</Typography>
       </Box>
-      <Divider orientation />
+      <Divider orientation="horizontal" />
       <Box className={classes.boxImets}>{items}</Box>
+      <Divider orientation="horizontal" />
+      <Box className={classes.boxImets}>
+        <Typography variant="subtitle1" align="right">
+          {total + " $"}
+        </Typography>
+      </Box>
     </Paper>
   );
 }

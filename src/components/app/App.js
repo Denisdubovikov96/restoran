@@ -3,12 +3,17 @@ import React, { useState, useEffect, Suspense } from "react";
 import { BrowserRouter as Router, Switch, Route } from "react-router-dom";
 import { fetchRestoran } from "../../api/GitRestorApi";
 
-import { createMuiTheme, ThemeProvider } from "@material-ui/core/styles";
+import {
+  createMuiTheme,
+  ThemeProvider,
+  withStyles,
+} from "@material-ui/core/styles";
 
-import CircularProgress from "@material-ui/core/CircularProgress";
+import MuiCircularProgress from "@material-ui/core/CircularProgress";
 import NavBar from "../nav-bar";
 const ListsContainer = React.lazy(() => import("../lists-container"));
 const BasketContainer = React.lazy(() => import("../basket-container"));
+const InfoContainer = React.lazy(() => import("../info-container"));
 
 const theme = createMuiTheme({
   palette: {
@@ -20,13 +25,21 @@ const theme = createMuiTheme({
     },
   },
 });
+const CircularProgress = withStyles({
+  root: {
+    position: "absolute",
+    top: "calc(50% - 30px)",
+    left: "calc(50% - 30px)",
+    zIndex: 10000,
+    height: 60,
+    width: 60,
+  },
+})(MuiCircularProgress);
 
 function App() {
   const [menu, setMenu] = useState();
   useEffect(() => {
-    console.log("рендерим ЮЗ");
     const fetchAPI = async () => {
-      console.log("рендерим Апп");
       setMenu(await fetchRestoran());
     };
     fetchAPI();
@@ -35,7 +48,8 @@ function App() {
   const restName = menu ? menu.data.restaurant.company.name : null;
   const restMenus = menu ? menu.data.restaurant.menu.categories : null;
   const restPictures = menu ? menu.data.restaurant.pictures : null;
-  console.log(restPictures);
+  const mapsProp = menu ? menu.data.restaurant.delivery_zones[0] : null;
+  const infoProp = menu ? menu.data.restaurant : null;
 
   const [basket, setBasket] = useState([]);
   function handlerAddItem(item, count) {
@@ -71,28 +85,18 @@ function App() {
     const newBasket = [...oldBasket, newItem];
     setBasket(newBasket);
   }
+  function handlerRemoveItem(){
+    
+  }
 
   return (
     <ThemeProvider theme={theme}>
       <Router>
         <NavBar basketLenght={basket.length} title={restName} />
-        <Suspense
-          fallback={
-            <CircularProgress
-              color="secondary"
-              style={{
-                position: "absolute",
-                top: "50%",
-                left: "50%",
-                zIndex: 10000,
-                transform: "scale(3)",
-              }}
-            />
-          }
-        >
+        <Suspense fallback={<CircularProgress color="secondary" />}>
           <Switch>
             <Route path="/info">
-              <h2>Тут будет информация</h2>
+              <InfoContainer mapsProp={mapsProp} infoProp={infoProp} />
             </Route>
             <Route path="/basket">
               <BasketContainer basket={basket} />

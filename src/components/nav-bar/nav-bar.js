@@ -17,7 +17,7 @@ const useStyles = makeStyles((theme) => ({
   },
 }));
 
-export default function DenseAppBar({ title, basketLenght }) {
+export default function NavBar({ title, basketLenght }) {
   const classes = useStyles();
 
   const [anchorEl, setAnchorEl] = React.useState(false);
@@ -28,7 +28,7 @@ export default function DenseAppBar({ title, basketLenght }) {
   return (
     <AppBar position="sticky">
       <Toolbar className={classes.root} variant="dense">
-        <IconButton edge="start" color="inherit" onClick={handleClick} >
+        <IconButton edge="start" color="inherit" onClick={handleClick}>
           <Badge badgeContent={basketLenght} color="secondary">
             <MenuIcon />
           </Badge>

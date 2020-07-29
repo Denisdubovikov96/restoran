@@ -13,6 +13,7 @@ import {
 import ExpandMoreIcon from "@material-ui/icons/ExpandMore";
 import RemoveIcon from "@material-ui/icons/Remove";
 import AddIcon from "@material-ui/icons/Add";
+import AddShoppingCartIcon from "@material-ui/icons/AddShoppingCart";
 
 const useStyles = makeStyles((theme) => ({
   menuListHead: {
@@ -54,7 +55,7 @@ const useStyles = makeStyles((theme) => ({
   },
   root: {
     [theme.breakpoints.between("xs", "sm")]: {
-      padding: "4px 8px 4px",
+      padding: "4px 8px 8px",
     },
   },
   btnAdd: {
@@ -63,7 +64,6 @@ const useStyles = makeStyles((theme) => ({
 }));
 
 export default function MenuListItem({ item, addItem }) {
-    console.log("рендерим елемент категории");
   const classes = useStyles();
   const [counter, setCounter] = useState(1);
   const handlerPlus = () => {
@@ -123,11 +123,11 @@ export default function MenuListItem({ item, addItem }) {
               >
                 {(counter * item.price).toFixed(2) + " $"}
                 <Divider
-                  style={{ margin: "0 5px" }}
+                  style={{ margin: "0 10px" }}
                   orientation="vertical"
                   flexItem
                 />
-                Add
+                <AddShoppingCartIcon fontSize="small" />
               </Button>
             </Box>
           </Box>

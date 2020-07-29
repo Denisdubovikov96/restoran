@@ -1,4 +1,4 @@
-import React from "react";
+import React, { useState } from "react";
 import { Box } from "@material-ui/core";
 import { makeStyles, withStyles } from "@material-ui/core/styles";
 import MuiAccordion from "@material-ui/core/Accordion";
@@ -16,6 +16,7 @@ import {
 } from "@material-ui/pickers";
 import DateFnsUtils from "@date-io/date-fns";
 import ruLocale from "date-fns/locale/ru";
+import ErrorOutlineSharpIcon from "@material-ui/icons/ErrorOutlineSharp";
 
 const useStyles = makeStyles((theme) => ({
   heading: {
@@ -47,6 +48,10 @@ const useStyles = makeStyles((theme) => ({
       marginRight: 0,
     },
   },
+  errorIcon: {
+    color: theme.palette.error.main,
+    marginLeft: 10,
+  },
 }));
 const Accordion = withStyles({
   root: {
@@ -63,27 +68,47 @@ const Accordion = withStyles({
 
 export default function BasketForm() {
   const classes = useStyles();
-  const [expanded, setExpanded] = React.useState(false);
-  const [delivery, setDelivery] = React.useState("Самовывоз");
-  const [payment, setPayment] = React.useState("Наличные");
-  const [date, setDate] = React.useState(new Date());
-  const [name, setName] = React.useState();
-  const [surname, setSurname] = React.useState();
-  const [email, setEmail] = React.useState();
-  const [phone, setPhone] = React.useState();
+  const [expanded, setExpanded] = useState(false);
+  const [delivery, setDelivery] = useState("Самовывоз");
+  const [payment, setPayment] = useState("Наличные");
+  const [date, setDate] = useState(new Date());
+  const [name, setName] = useState("");
+  const [surname, setSurname] = useState("");
+  const [email, setEmail] = useState();
+  const [emailError, setEmailError] = useState(true);
+  const [phone, setPhone] = useState();
+  const [phoneError, setPhoneError] = useState(true);
 
   const handleChange = (panel) => (event, isExpanded) => {
     setExpanded(isExpanded ? panel : false);
   };
-
+  const emailChange = (event) => {
+    const emailReg = /^((?!\.)[\w-_.]*[^.])(@\w+)(\.\w+(\.\w+)?[^.\W])$/gim;
+    setEmailError(!emailReg.test(event.target.value));
+    setEmail(event.target.value);
+  };
+  const phoneChange = (event) => {
+    const phoneReg = /\+?\d{1,4}?[-.\s]?\(?\d{1,3}?\)?[-.\s]?\d{1,4}[-.\s]?\d{1,4}[-.\s]?\d{1,9}/gm;
+    setPhoneError(!phoneReg.test(event.target.value));
+    setPhone(event.target.value);
+  };
   return (
     <Box className={classes.formContainer}>
       <Accordion
-        expanded={expanded === "panelContact"}
+        expanded={
+          expanded === "panelContact" ||
+          phoneError ||
+          emailError ||
+          surname === "" ||
+          name === ""
+        }
         onChange={handleChange("panelContact")}
       >
         <AccordionSummary expandIcon={<ExpandMoreIcon />}>
           <Typography className={classes.heading}>Контакт</Typography>
+          {phoneError || emailError || surname === "" || name === "" ? (
+            <ErrorOutlineSharpIcon className={classes.errorIcon} />
+          ) : null}
         </AccordionSummary>
         <AccordionDetails>
           <Box className={classes.contactBox}>
@@ -96,6 +121,8 @@ export default function BasketForm() {
               id="name"
               label="Имя"
               variant="outlined"
+              error={name === ""}
+              required
             />
             <TextField
               className={classes.textFieldHalf}
@@ -106,26 +133,32 @@ export default function BasketForm() {
               id="surname"
               label="Фамилия"
               variant="outlined"
+              error={surname === ""}
+              required
             />
             <TextField
               className={classes.textFieldFull}
               size="small"
               name="email"
               value={email}
-              onChange={(event) => setEmail(event.target.value)}
+              onChange={emailChange}
               id="email"
               label="Електронная почта"
               variant="outlined"
+              required
+              error={emailError}
             />
             <TextField
               className={classes.textFieldFull}
               size="small"
               name="phone"
               value={phone}
-              onChange={(event) => setPhone(event.target.value)}
+              onChange={phoneChange}
               id="phone"
               label="Телефон"
               variant="outlined"
+              required
+              error={phoneError}
             />
           </Box>
         </AccordionDetails>
@@ -178,7 +211,6 @@ export default function BasketForm() {
               label="Время"
               minDate={new Date()}
               format="yyyy/MM/dd hh:mm a"
-              error={false}
               helperText="Введите время"
             />
           </MuiPickersUtilsProvider>
@@ -215,21 +247,21 @@ export default function BasketForm() {
           </RadioGroup>
         </AccordionDetails>
       </Accordion>
-      <Accordion
-        expanded={expanded === "panel5"}
-        onChange={handleChange("panel5")}
-      >
-        <AccordionSummary
-          expandIcon={<ExpandMoreIcon />}
-          aria-controls="panel5bh-content"
-          id="panel5bh-header"
+      {payment === "Карта" ? (
+        <Accordion
+          expanded={expanded === "panel5"}
+          onChange={handleChange("panel5")}
         >
-          <Typography className={classes.heading}>
-            Fulfillment options
-          </Typography>
-        </AccordionSummary>
-        <AccordionDetails></AccordionDetails>
-      </Accordion>
+          <AccordionSummary
+            expandIcon={<ExpandMoreIcon />}
+            aria-controls="panel5bh-content"
+            id="panel5bh-header"
+          >
+            <Typography className={classes.heading}>Форма оплаты</Typography>
+          </AccordionSummary>
+          <AccordionDetails></AccordionDetails>
+        </Accordion>
+      ) : null}
     </Box>
   );
 }
