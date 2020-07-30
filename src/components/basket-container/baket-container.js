@@ -1,10 +1,5 @@
 import React from "react";
-import {
-  Container,
-  Paper,
-  makeStyles,
-  Button,
-} from "@material-ui/core";
+import { Container, Paper, makeStyles, Button } from "@material-ui/core";
 import BasketList from "../basket-list";
 import BasketForm from "../basket-form";
 
@@ -26,7 +21,7 @@ const useStyles = makeStyles((theme) => ({
   },
 }));
 
-export default function BusketContainer({ basket }) {
+export default function BusketContainer({ basket, removeItem }) {
   const classes = useStyles();
   const total =
     basket.length > 0
@@ -59,7 +54,7 @@ export default function BusketContainer({ basket }) {
       <Paper className={classes.boxConteiner}>
         <form onSubmit={handleSubmit}>
           <BasketForm />
-          <BasketList basket={basket} />
+          <BasketList basket={basket} removeItem={removeItem} />
           <Button
             type="submit"
             color="primary"

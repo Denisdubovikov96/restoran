@@ -38,7 +38,7 @@ const useStyles = makeStyles((theme) => ({
     },
   },
 }));
-export default function BasketList({ basket }) {
+export default function BasketList({ basket, removeItem }) {
   const classes = useStyles();
   const total =
     basket.length > 0
@@ -58,7 +58,11 @@ export default function BasketList({ basket }) {
             </Typography>
             <Typography variant="caption">
               {`${item.totalPrice} $`}
-              <IconButton size="small" color="secondary">
+              <IconButton
+                size="small"
+                color="secondary"
+                onClick={() => removeItem(item.id)}
+              >
                 <RemoveIcon />
               </IconButton>
             </Typography>

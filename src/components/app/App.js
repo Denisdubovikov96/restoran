@@ -52,6 +52,7 @@ function App() {
   const infoProp = menu ? menu.data.restaurant : null;
 
   const [basket, setBasket] = useState([]);
+
   function handlerAddItem(item, count) {
     // берем старую корзину
     let oldBasket = basket;
@@ -85,8 +86,14 @@ function App() {
     const newBasket = [...oldBasket, newItem];
     setBasket(newBasket);
   }
-  function handlerRemoveItem(){
-    
+
+  function handlerRemoveItem(id) {
+    const index = basket.findIndex((item) => {
+      return item.id === id;
+    });
+    const newBasket = [...basket.slice(0, index), ...basket.slice(index + 1)];
+
+    setBasket(newBasket);
   }
 
   return (
@@ -99,7 +106,7 @@ function App() {
               <InfoContainer mapsProp={mapsProp} infoProp={infoProp} />
             </Route>
             <Route path="/basket">
-              <BasketContainer basket={basket} />
+              <BasketContainer basket={basket} removeItem={handlerRemoveItem} />
             </Route>
             <Route path="/">
               <ListsContainer
