@@ -51,6 +51,7 @@ export default function ListsContainer({ restMenus, addItem, restPictures }) {
               className={classes.imgContMain}
               style={{
                 backgroundImage: `url(${menuImage})`,
+                //   display: `${visible}`,
               }}
             />
           ) : null}
